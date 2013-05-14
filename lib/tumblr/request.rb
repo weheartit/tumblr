@@ -48,7 +48,7 @@ module Tumblr
         raise Tumblr::Error::ServiceUnavailableError.new(response.body)
       end
 
-      response["Content-Type"] == "application/json" ? Hashie::Mash.new(JSON::parse(response.body)) : response.body
+      response["Content-Type"] =~ /application\/json/ ? Hashie::Mash.new(JSON::parse(response.body)) : response.body
     end
   end
   

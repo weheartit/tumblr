@@ -33,19 +33,19 @@ module Tumblr
       response = connection.request(method, path, *params)
       case response.code.to_i
       when 400
-        raise Tumblr::Error::BadRequestError.new(response.body)
+        raise Tumblr::Error::BadRequestError.new(response.inspect)
       when 401
-        raise Tumblr::Error::UnauthorizedError.new(response.body)
+        raise Tumblr::Error::UnauthorizedError.new(response.inspect)
       when 403
-        raise Tumblr::Error::ForbiddenError.new(response.body)
+        raise Tumblr::Error::ForbiddenError.new(response.inspect)
       when 404
-        raise Tumblr::Error::NotFoundError.new(response.body)
+        raise Tumblr::Error::NotFoundError.new(response.inspect)
       when 500
-        raise Tumblr::Error::InternalServerError.new(response.body)
+        raise Tumblr::Error::InternalServerError.new(response.inspect)
       when 502
-        raise Tumblr::Error::BadGatewayError.new(response.body)
+        raise Tumblr::Error::BadGatewayError.new(response.inspect)
       when 503
-        raise Tumblr::Error::ServiceUnavailableError.new(response.body)
+        raise Tumblr::Error::ServiceUnavailableError.new(response.inspect)
       end
 
       response["Content-Type"] =~ /application\/json/ ? Hashie::Mash.new(JSON::parse(response.body)) : response.body
